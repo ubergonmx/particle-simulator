@@ -37,7 +37,12 @@ public
 			bitmap = gcnew Bitmap(canvas->Width, canvas->Height);
 			cursorPen = gcnew Pen(Color::Black);
 
-			// Initialize the list of drawings
+			// Enable double buffering
+			this->SetStyle(ControlStyles::DoubleBuffer |
+							   ControlStyles::UserPaint |
+							   ControlStyles::AllPaintingInWmPaint,
+						   true);
+			this->UpdateStyles();
 
 			// Initialize the DVD logo and its velocity
 			dvdLogo = Rectangle(0, 0, 100, 50);
