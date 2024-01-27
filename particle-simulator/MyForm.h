@@ -21,6 +21,9 @@ public
 		Pen ^ cursorPen;
 		int cursorX, cursorY = -1;
 
+		Rectangle dvdLogo;
+		Point velocity;
+
 	public:
 		MyForm(void)
 		{
@@ -30,6 +33,33 @@ public
 			//
 			g = canvas->CreateGraphics();
 			cursorPen = gcnew Pen(Color::Black);
+
+			// Initialize the DVD logo and its velocity
+			dvdLogo = Rectangle(0, 0, 100, 50);
+			velocity = Point(5, 5);
+
+			// Create and start the timer
+			Timer ^ timer = gcnew Timer();
+			timer->Interval = 20; // 20 ms = 50 frames per second
+			timer->Tick += gcnew System::EventHandler(this, &MyForm::timer_Tick);
+			timer->Start();
+		}
+
+	private:
+		void timer_Tick(System::Object ^ sender, System::EventArgs ^ e)
+		{
+			// Update the DVD logo's position
+			dvdLogo.X += velocity.X;
+			dvdLogo.Y += velocity.Y;
+
+			// If the DVD logo hits the edge of the canvas, reverse its velocity
+			if (dvdLogo.Left < 0 || dvdLogo.Right > canvas->Width)
+				velocity.X = -velocity.X;
+			if (dvdLogo.Top < 0 || dvdLogo.Bottom > canvas->Height)
+				velocity.Y = -velocity.Y;
+
+			// Redraw the canvas
+			canvas->Invalidate();
 		}
 
 	protected:
@@ -76,6 +106,7 @@ public
 			this->canvas->Name = L"canvas";
 			this->canvas->Size = System::Drawing::Size(800, 640);
 			this->canvas->TabIndex = 0;
+			this->canvas->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::canvas_Paint);
 			this->canvas->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::canvas_MouseDown);
 			this->canvas->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::canvas_MouseMove);
 			this->canvas->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::canvas_MouseUp);
@@ -136,5 +167,10 @@ public
 				cursorY = e->Y;
 			}
 		}
-	};
+	private: System::Void canvas_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+		// Draw the DVD logo
+		g->FillRectangle(Brushes::Red, dvdLogo);
+	}
+};
+
 }
