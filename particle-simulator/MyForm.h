@@ -16,7 +16,7 @@ namespace particlesimulator {
 	{
 		Graphics^ g;
 		bool cursorMoving = false;
-		Pen ^cursorPen = gcnew Pen(Color::Black);
+		Pen^ cursorPen;
 		int cursorX, cursorY = -1;
 
 
@@ -27,6 +27,8 @@ namespace particlesimulator {
 			//
 			//TODO: Add the constructor code here
 			//
+			g = canvas->CreateGraphics();
+			cursorPen = gcnew Pen(Color::Black);
 		}
 
 	protected:
@@ -70,7 +72,9 @@ namespace particlesimulator {
 			this->canvas->Name = L"canvas";
 			this->canvas->Size = System::Drawing::Size(1280, 760);
 			this->canvas->TabIndex = 0;
-			this->canvas->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::canvas_Paint);
+			this->canvas->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::canvas_MouseDown);
+			this->canvas->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::canvas_MouseMove);
+			this->canvas->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::canvas_MouseUp);
 			// 
 			// titleLbl
 			// 
@@ -98,12 +102,23 @@ namespace particlesimulator {
 
 		}
 #pragma endregion
-	private: System::Void canvas_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-		Graphics^ g = e->Graphics;
-		Pen^ pen = gcnew Pen(Color::Black);
-		Brush^ brush = gcnew SolidBrush(Color::Black);
-		g->DrawEllipse(pen, 0, 0, 100, 100);
-		g->FillEllipse(brush, 0, 0, 100, 100);
+	
+	private: System::Void canvas_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+		cursorMoving = true;
+		cursorX = e->X;
+		cursorY = e->Y;
+	}
+	private: System::Void canvas_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+		cursorMoving = false;
+		cursorX = -1;
+		cursorY = -1;
+	}
+	private: System::Void canvas_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+		if (cursorX != 1 && cursorY != -1 && cursorMoving) {
+			g->DrawLine(cursorPen, cursorX, cursorY, e->X, e->Y);
+			cursorX = e->X;
+			cursorY = e->Y;
+		}
 	}
 	};
 }
