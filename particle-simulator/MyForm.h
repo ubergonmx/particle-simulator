@@ -18,6 +18,7 @@ public
 	ref class MyForm : public System::Windows::Forms::Form
 	{
 		Graphics ^ g;
+		Bitmap ^ bitmap;
 		bool cursorMoving = false;
 		Pen ^ cursorPen;
 		int cursorX, cursorY = -1;
@@ -30,11 +31,13 @@ public
 		MyForm(void)
 		{
 			InitializeComponent();
-			//
-			// TODO: Add the constructor code here
-			//
+
+			// Initialize the graphics object and the cursor pen
 			g = canvas->CreateGraphics();
+			bitmap = gcnew Bitmap(canvas->Width, canvas->Height);
 			cursorPen = gcnew Pen(Color::Black);
+
+			// Initialize the list of drawings
 
 			// Initialize the DVD logo and its velocity
 			dvdLogo = Rectangle(0, 0, 100, 50);
@@ -169,15 +172,24 @@ public
 		{
 			if (cursorX != 1 && cursorY != -1 && cursorMoving)
 			{
-				g->DrawLine(cursorPen, cursorX, cursorY, e->X, e->Y);
+				Graphics ^ g_bitmap = Graphics::FromImage(bitmap);
+				g_bitmap->DrawLine(cursorPen, cursorX, cursorY, e->X, e->Y);
+
+				delete g_bitmap;
+
 				cursorX = e->X;
 				cursorY = e->Y;
+
+				canvas->Invalidate();
 			}
 		}
 
 	private:
 		System::Void canvas_Paint(System::Object ^ sender, System::Windows::Forms::PaintEventArgs ^ e)
 		{
+			// Draw the bitmap
+			e->Graphics->DrawImage(bitmap, 0, 0);
+
 			// Draw the DVD logo
 			g->FillRectangle(gcnew SolidBrush(dvdLogoColor), dvdLogo);
 		}
