@@ -102,6 +102,7 @@ public
 				static_cast<System::Byte>(0)));
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"MyForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Particle Simulator - Mangoba, Palpallatoc";
 			this->ResumeLayout(false);
 			this->PerformLayout();
