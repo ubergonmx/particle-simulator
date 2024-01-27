@@ -37,13 +37,6 @@ public
 			bitmap = gcnew Bitmap(canvas->Width, canvas->Height);
 			cursorPen = gcnew Pen(Color::Black);
 
-			// Enable double buffering
-			this->SetStyle(ControlStyles::DoubleBuffer |
-							   ControlStyles::UserPaint |
-							   ControlStyles::AllPaintingInWmPaint,
-						   true);
-			this->UpdateStyles();
-
 			// Initialize the DVD logo and its velocity
 			dvdLogo = Rectangle(0, 0, 100, 50);
 			dvdLogoColor = Color::Red;
@@ -74,6 +67,24 @@ public
 				velocity.Y = -velocity.Y;
 				dvdLogoColor = Color::FromArgb(255, rand() % 256, rand() % 256, rand() % 256);
 			}
+
+			// Check for collisions with the bitmap
+			Color background = Color::FromArgb(0,0,0,0);
+			if (dvdLogo.Left >= 0 && dvdLogo.Right < bitmap->Width && dvdLogo.Top >= 0 && dvdLogo.Bottom < bitmap->Height)
+			{
+				Color topLeft = bitmap->GetPixel(dvdLogo.Left, dvdLogo.Top);
+				Color topRight = bitmap->GetPixel(dvdLogo.Right, dvdLogo.Top);
+				Color bottomLeft = bitmap->GetPixel(dvdLogo.Left, dvdLogo.Bottom);
+				Color bottomRight = bitmap->GetPixel(dvdLogo.Right, dvdLogo.Bottom);				
+				if (topLeft != background || topRight != background || bottomLeft != background || bottomRight != background)
+				{
+					// If the DVD logo hit a drawing, reverse its velocity and change its color
+					velocity.X = -velocity.X;
+					velocity.Y = -velocity.Y;
+					dvdLogoColor = System::Drawing::Color::FromArgb(255, rand() % 256, rand() % 256, rand() % 256);
+				}
+			}
+
 			// Redraw the canvas
 			canvas->Invalidate();
 		}
@@ -185,7 +196,7 @@ public
 				cursorX = e->X;
 				cursorY = e->Y;
 
-				canvas->Invalidate();
+				// canvas->Invalidate();
 			}
 		}
 
