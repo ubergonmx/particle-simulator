@@ -74,7 +74,7 @@ public
 			this->canvas->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->canvas->Location = System::Drawing::Point(0, 0);
 			this->canvas->Name = L"canvas";
-			this->canvas->Size = System::Drawing::Size(1280, 760);
+			this->canvas->Size = System::Drawing::Size(800, 640);
 			this->canvas->TabIndex = 0;
 			this->canvas->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::canvas_MouseDown);
 			this->canvas->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::canvas_MouseMove);
@@ -85,7 +85,7 @@ public
 			this->titleLbl->AutoSize = true;
 			this->titleLbl->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->titleLbl->Location = System::Drawing::Point(1286, 9);
+			this->titleLbl->Location = System::Drawing::Point(815, 9);
 			this->titleLbl->Name = L"titleLbl";
 			this->titleLbl->Size = System::Drawing::Size(398, 55);
 			this->titleLbl->TabIndex = 1;
@@ -94,9 +94,12 @@ public
 			// MyForm
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
-			this->ClientSize = System::Drawing::Size(1706, 704);
+			this->AutoScroll = true;
+			this->ClientSize = System::Drawing::Size(1258, 644);
 			this->Controls->Add(this->titleLbl);
 			this->Controls->Add(this->canvas);
+			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"MyForm";
 			this->Text = L"Particle Simulator - Mangoba, Palpallatoc";
