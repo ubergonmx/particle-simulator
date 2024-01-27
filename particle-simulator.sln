@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "particle-simulator", "particle-simulator\particle-simulator.vcxproj", "{CB657727-8F02-4A6D-913F-27A6DD377257}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB657727-8F02-4A6D-913F-27A6DD377257}.Debug|x64.ActiveCfg = Debug|x64
+		{CB657727-8F02-4A6D-913F-27A6DD377257}.Debug|x64.Build.0 = Debug|x64
+		{CB657727-8F02-4A6D-913F-27A6DD377257}.Debug|x86.ActiveCfg = Debug|Win32
+		{CB657727-8F02-4A6D-913F-27A6DD377257}.Debug|x86.Build.0 = Debug|Win32
+		{CB657727-8F02-4A6D-913F-27A6DD377257}.Release|x64.ActiveCfg = Release|x64
+		{CB657727-8F02-4A6D-913F-27A6DD377257}.Release|x64.Build.0 = Release|x64
+		{CB657727-8F02-4A6D-913F-27A6DD377257}.Release|x86.ActiveCfg = Release|Win32
+		{CB657727-8F02-4A6D-913F-27A6DD377257}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79FF8934-92CC-4C31-A9A9-CD83CBFC5A5A}
+	EndGlobalSection
+EndGlobal
